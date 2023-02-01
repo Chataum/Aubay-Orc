@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     options {
         disableConcurrentBuilds()
         disableResume()
@@ -18,9 +18,8 @@ pipeline {
         stage('Checkout GIT repository') {
             steps {     
               script {
-                git branch: 'master',
-                credentialsId: '21f01d09-06da9cc35103',
-                url: 'git@mysecret-nonexistent-repo/jenkins.git'
+                git branch: 'main',
+                url: 'https://github.com/Chataum/Aubay-Orc.git'
               }
             }
         }
