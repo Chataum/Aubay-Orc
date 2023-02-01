@@ -33,7 +33,7 @@ pipeline {
                     """
 
                     sh """
-                    docker build pipelines/ -t $params.ENVIRONMENT_NAME:latest
+                    docker build . -t $params.ENVIRONMENT_NAME:latest -f ./pipelines/Dockerfile
                     """
 
                 }else{
