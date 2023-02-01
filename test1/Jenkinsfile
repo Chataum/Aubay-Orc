@@ -1,18 +1,25 @@
 pipeline {
     agent any
+
+    parameters {
+        string(name: 'envName', defaultValue: 'env', description: 'Enter the environment name')
+        string(name: 'mysqlPassword', defaultValue: 'pwd123', description: 'Enter the MySQL password')
+        string(name: 'mysqlPort', defaultValue: '3306', description: 'Enter the MySQL port')
     }
 
     stages {
-        stage('Build Image') {
+        stage('Build Docker Image') {
             steps {
-                sh 'docker build -t mysql-$ENV_NAME -f ./images/mysql-latest/dockerfile .'
+                sh 'docker build -t mysql-image:latest images/sql-latest/Dockerfile .'
             }
         }
-        stage('Run Container') {
+
+        stage('build Container') {
             steps {
-                sh 'docker run -p $MYSQL_PORT:$MYSQL_PORT -e MYSQL_ROOT_PASSWORD=$MYSQL_PASSWORD --name mysql-$ENV_NAME-container mysql-$ENV_NAME'
+                sh 'docker run --name ${envName} -e MYSQL_ROOT_PASSWORD=${mysqlPassword} -p ${mysqlPort}:3306 -d mysql-image:latest'
             }
         }
+
         stage('Prepare Environment') {
             steps {
-                sh 'docker exec mysql-$ENV_NAME-container mysql
+                sh 'docker exec -it ${envName} mysql -u root -p${mysqlPassword} -e "CREATE USER \'${envName}\'@\'localhost\'
