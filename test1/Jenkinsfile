@@ -25,3 +25,4 @@ pipeline {
                 sh 'docker exec -it ${envName} mysql -u root -p${mysqlPassword}'
             }
         }
+    }
