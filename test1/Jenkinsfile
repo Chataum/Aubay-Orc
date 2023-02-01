@@ -22,4 +22,4 @@ pipeline {
 
         stage('Prepare Environment') {
             steps {
-                sh 'docker exec -it ${envName} mysql -u root -p${mysqlPassword} -e
+                sh 'docker exec -it ${envName} mysql -u root -p${mysqlPassword}'
