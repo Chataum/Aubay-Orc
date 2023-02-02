@@ -29,7 +29,7 @@ pipeline {
                 if (!params.SKIP_STEP_1){    
                     echo "Creating docker image with name $params.ENVIRONMENT_NAME using port: $params.MYSQL_PORT"
                     sh """
-                    sed 's/<PASSWORD>/$params.MYSQL_PASSWORD/g' pipelines/include/create_developer.sql
+                    sed 's/<PASSWORD>/$params.MYSQL_PASSWORD/g' pipelines/include/create_developer.template
                     """
 
                     sh """
