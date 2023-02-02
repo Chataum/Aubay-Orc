@@ -53,7 +53,7 @@ pipeline {
                 """
 
                 sh """
-                docker exec ${containerName} /bin/bash -c 'mysql --user="root" --password="$params.MYSQL_PASSWORD" < include/create_developer.template'
+                docker exec ${containerName} /bin/bash -c 'mysql --user="root" --password="$params.MYSQL_PASSWORD" < scripts/create_developer.template'
                 """
 
                 echo "Docker container created: $containerName"
