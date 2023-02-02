@@ -18,8 +18,9 @@ pipeline {
         stage('Checkout GIT repository') {
             steps {     
               script {
-                git branch: 'main',
-                url: 'https://github.com/Chataum/Aubay-Orc.git'
+                git branch: 'master',
+                credentialsId: '21f01d09-06da9cc35103',
+                url: 'git@mysecret-nonexistent-repo/jenkins.git'
               }
             }
         }
@@ -29,11 +30,11 @@ pipeline {
                 if (!params.SKIP_STEP_1){    
                     echo "Creating docker image with name $params.ENVIRONMENT_NAME using port: $params.MYSQL_PORT"
                     sh """
-                    sed 's/<PASSWORD>/$params.MYSQL_PASSWORD/g' pipelines/include/create_developer.template
+                    sed 's/<PASSWORD>/$params.MYSQL_PASSWORD/g' pipelines/include/create_developer.template > pipelines/include/create_developer.sql
                     """
 
                     sh """
-                    docker build . -t $params.ENVIRONMENT_NAME:latest -f ./pipelines/Dockerfile
+                    docker build pipelines/ -t $params.ENVIRONMENT_NAME:latest
                     """
 
                 }else{
